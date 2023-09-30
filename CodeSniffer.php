@@ -531,7 +531,7 @@ class PHP_CodeSniffer
 
         // Ensure this option is enabled or else line endings will not always
         // be detected properly for files created on a Mac with the /r line ending.
-        ini_set('auto_detect_line_endings', true);
+        @ini_set('auto_detect_line_endings', true);
 
         if (defined('PHP_CODESNIFFER_IN_TESTS') === true && empty($restrictions) === false) {
             // Should be one standard and one sniff being tested at a time.
@@ -2025,12 +2025,12 @@ class PHP_CodeSniffer
             $lastCharWasCaps = $classFormat;
 
             for ($i = 1; $i < $length; $i++) {
-                $ascii = ord($string{$i});
+                $ascii = ord($string[$i]);
                 if ($ascii >= 48 && $ascii <= 57) {
                     // The character is a number, so it cant be a capital.
                     $isCaps = false;
                 } else {
-                    if (strtoupper($string{$i}) === $string{$i}) {
+                    if (strtoupper($string[$i]) === $string[$i]) {
                         $isCaps = true;
                     } else {
                         $isCaps = false;
@@ -2076,7 +2076,7 @@ class PHP_CodeSniffer
                     continue;
                 }
 
-                if ($bit{0} !== strtoupper($bit{0})) {
+                if ($bit[0] !== strtoupper($bit[0])) {
                     $validName = false;
                     break;
                 }
@@ -2497,7 +2497,7 @@ class PHP_CodeSniffer
      */
     public static function isPharFile($path)
     {
-        if (strpos($path, 'phar://') === 0) {
+        if (@strpos($path, 'phar://') === 0) {
             return true;
         }
 
