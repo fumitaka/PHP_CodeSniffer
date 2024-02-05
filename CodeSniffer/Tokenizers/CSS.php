@@ -207,7 +207,7 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
                     // colour like 8FB7DB, which PHP splits into 8 and FB7DB.
                     if (($commentTokens[0]['code'] === T_LNUMBER
                         || $commentTokens[0]['code'] === T_DNUMBER)
-                        && $commentTokens[1]['code'] === T_STRING
+                        && (isset($commentTokens[1]) && $commentTokens[1]['code'] === T_STRING)
                     ) {
                         $firstContent .= $commentTokens[1]['content'];
                         array_shift($commentTokens);
@@ -216,7 +216,7 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
                     // If the first content looks like a colour and not a class
                     // definition, join the tokens together.
                     if (preg_match('/^[ABCDEF0-9]+$/i', $firstContent) === 1
-                        && $commentTokens[1]['content'] !== '-'
+                        && (isset($commentTokens[1]) && $commentTokens[1]['content'] !== '-')
                     ) {
                         array_shift($commentTokens);
                         // Work out what we trimmed off above and remember to re-add it.
